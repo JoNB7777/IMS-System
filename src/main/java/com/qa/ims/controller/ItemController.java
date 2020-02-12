@@ -26,6 +26,10 @@ public static final Logger LOGGER = Logger.getLogger(CustomerController.class);
 	Double getDoubleInput() {
 		return Utils.getDoubleInput();
 	}
+	
+	Long getLongInput() {
+		return Utils.getLongInput();
+	}
 
 	@Override
 	public List<Item> readAll() {
@@ -50,7 +54,7 @@ public static final Logger LOGGER = Logger.getLogger(CustomerController.class);
 	@Override
 	public Item update() {
 		LOGGER.info("Please enter the id of the item you would like to update");
-		Long id = Long.valueOf(getInput());
+		Long id = getLongInput();
 		LOGGER.info("Please enter an item name");
 		String itemName = getInput();
 		LOGGER.info("Please enter a price");
@@ -63,7 +67,7 @@ public static final Logger LOGGER = Logger.getLogger(CustomerController.class);
 	@Override
 	public void delete() {
 		LOGGER.info("Please enter the id of the item you would like to delete");
-		Long id = Long.valueOf(getInput());
+		Long id = getLongInput();
 		itemService.delete(id);
 		
 	}

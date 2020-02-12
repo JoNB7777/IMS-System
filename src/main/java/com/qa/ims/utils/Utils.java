@@ -19,5 +19,17 @@ public class Utils {
 		Scanner scanner = new Scanner(System.in);
 		return Double.valueOf(scanner.nextLine());
 	}
+	
+	public static Long getLongInput() {
+		@SuppressWarnings("resource")
+		Scanner scanner = new Scanner(System.in);
+		return Long.valueOf(scanner.nextLine());
+	}
+	
+	public static Integer getIntInput() {
+		@SuppressWarnings("resource")
+		Scanner scanner = new Scanner(System.in);
+		return Integer.valueOf(scanner.nextLine());
+	}
 
 }

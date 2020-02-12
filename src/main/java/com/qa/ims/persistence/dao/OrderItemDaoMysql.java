@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 
-import com.qa.ims.persistence.domain.Customer;
 import com.qa.ims.persistence.domain.OrderItem;
 
 public class OrderItemDaoMysql implements Dao<OrderItem> {
@@ -35,9 +34,9 @@ public class OrderItemDaoMysql implements Dao<OrderItem> {
 	OrderItem orderItemFromResultSet(ResultSet resultSet) throws SQLException {
 		Long id = resultSet.getLong("id");
 		Long itemId = resultSet.getLong("item_id");
-		Long customerId = resultSet.getLong("customer_id");
+		Long orderId = resultSet.getLong("order_id");
 		int quantity = resultSet.getInt("quantity");
-		return new OrderItem(id, itemId, customerId, quantity);
+		return new OrderItem(id, itemId, orderId, quantity);
 	}
 	
 	public OrderItem readLatest() {
@@ -57,8 +56,8 @@ public class OrderItemDaoMysql implements Dao<OrderItem> {
 	public OrderItem create(OrderItem orderItem) {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
 				Statement statement = connection.createStatement();) {
-			statement.executeUpdate("insert into customers(item_id, customer_id, quantity) values('" + orderItem.getItemId()
-					+ "','" + orderItem.getCustomerId() + "', ' " + orderItem.getQuantity() + " ')");
+			statement.executeUpdate("insert into order_items(item_id, order_id, quantity) values('" + orderItem.getItemId()
+					+ "','" + orderItem.getOrderId() + "', ' " + orderItem.getQuantity() + " ')");
 			return readLatest();
 		} catch (Exception e) {
 			LOGGER.debug(e.getStackTrace());
@@ -84,7 +83,7 @@ public class OrderItemDaoMysql implements Dao<OrderItem> {
 	public OrderItem update(OrderItem orderItem) {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
 				Statement statement = connection.createStatement();) {
-			statement.executeUpdate("update customers set quantity ='" + orderItem.getQuantity() +  "' where id =" + orderItem.getId());
+			statement.executeUpdate("update order_items set quantity ='" + orderItem.getQuantity() +  "' where id =" + orderItem.getId());
 			return readOrderItem(orderItem.getId());
 		} catch (Exception e) {
 			LOGGER.debug(e.getStackTrace());
