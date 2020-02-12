@@ -9,55 +9,56 @@ import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 
-import com.qa.ims.persistence.domain.Item;
+import com.qa.ims.persistence.domain.Customer;
+import com.qa.ims.persistence.domain.OrderItem;
 
-
-public class ItemDaoMysql implements Dao<Item>{
+public class OrderItemDaoMysql implements Dao<OrderItem> {
 	
 	public static final Logger LOGGER = Logger.getLogger(CustomerDaoMysql.class);
-	
+
 	private String jdbcConnectionUrl;
 	private String username;
 	private String password;
 
-	public ItemDaoMysql(String username, String password) {
+	public OrderItemDaoMysql(String username, String password) {
 		this.jdbcConnectionUrl = "jdbc:mysql://localhost:3306/ims";
 		this.username = username;
 		this.password = password;
 	}
 
-	public ItemDaoMysql(String jdbcConnectionUrl, String username, String password) {
+	public OrderItemDaoMysql(String jdbcConnectionUrl, String username, String password) {
 		this.jdbcConnectionUrl = jdbcConnectionUrl;
 		this.username = username;
 		this.password = password;
 	}
-
-	Item itemFromResultSet(ResultSet resultSet) throws SQLException {
+	
+	OrderItem orderItemFromResultSet(ResultSet resultSet) throws SQLException {
 		Long id = resultSet.getLong("id");
-		String itemName = resultSet.getString("item_name");
-		Double value = resultSet.getDouble("value");
-		return new Item(id, itemName, value);
+		Long itemId = resultSet.getLong("item_id");
+		Long customerId = resultSet.getLong("customer_id");
+		int quantity = resultSet.getInt("quantity");
+		return new OrderItem(id, itemId, customerId, quantity);
 	}
 	
-	public Item readLatest() {
+	public OrderItem readLatest() {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
 				Statement statement = connection.createStatement();
-				ResultSet resultSet = statement.executeQuery("SELECT FROM items ORDER BY id DESC LIMIT 1");) {
+				ResultSet resultSet = statement.executeQuery("SELECT FROM order_items ORDER BY id DESC LIMIT 1");) {
 			resultSet.next();
-			return itemFromResultSet(resultSet);
+			return orderItemFromResultSet(resultSet);
 		} catch (Exception e) {
 			LOGGER.debug(e.getStackTrace());
 			LOGGER.error(e.getMessage());
 		}
 		return null;
 	}
-	
+
 	@Override
-	public Item create(Item item) {
+	public OrderItem create(OrderItem orderItem) {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
 				Statement statement = connection.createStatement();) {
-			statement.executeUpdate("insert into items(item_name, item_value) values('" + item.getItemName()
-					+ "','" + item.getItemValue() + "')");
+			statement.executeUpdate("insert into customers(item_id, customer_id, quantity) values('" + orderItem.getItemId()
+					+ "','" + orderItem.getCustomerId() + "', ' " + orderItem.getQuantity() + " ')");
 			return readLatest();
 		} catch (Exception e) {
 			LOGGER.debug(e.getStackTrace());
@@ -66,38 +67,37 @@ public class ItemDaoMysql implements Dao<Item>{
 		return null;
 	}
 	
-	public Item readItem(Long id) {
+	public OrderItem readOrderItem(Long id) {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
 				Statement statement = connection.createStatement();
-				ResultSet resultSet = statement.executeQuery("SELECT FROM items where id = " + id);) {
+				ResultSet resultSet = statement.executeQuery("SELECT FROM order_items where id = " + id);) {
 			resultSet.next();
-			return itemFromResultSet(resultSet);
+			return orderItemFromResultSet(resultSet);
 		} catch (Exception e) {
 			LOGGER.debug(e.getStackTrace());
 			LOGGER.error(e.getMessage());
 		}
 		return null;
 	}
-	
+
 	@Override
-	public Item update(Item item) {
+	public OrderItem update(OrderItem orderItem) {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
 				Statement statement = connection.createStatement();) {
-			statement.executeUpdate("update items set item_name ='" + item.getItemName() + "', item_value ='"
-					+ item.getItemValue() + "' where id =" + item.getId());
-			return readItem(item.getId());
+			statement.executeUpdate("update customers set quantity ='" + orderItem.getQuantity() +  "' where id =" + orderItem.getId());
+			return readOrderItem(orderItem.getId());
 		} catch (Exception e) {
 			LOGGER.debug(e.getStackTrace());
 			LOGGER.error(e.getMessage());
 		}
 		return null;
 	}
-	
+
 	@Override
 	public void delete(long id) {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
 				Statement statement = connection.createStatement();) {
-			statement.executeUpdate("delete from items where id = " + id);
+			statement.executeUpdate("delete from order_items where id = " + id);
 		} catch (Exception e) {
 			LOGGER.debug(e.getStackTrace());
 			LOGGER.error(e.getMessage());
@@ -106,20 +106,21 @@ public class ItemDaoMysql implements Dao<Item>{
 	}
 	
 	@Override
-	public ArrayList<Item> readAll() {
+	public ArrayList<OrderItem> readAll() {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
 				Statement statement = connection.createStatement();
-				ResultSet resultSet = statement.executeQuery("select * from items");) {
-			ArrayList<Item> items = new ArrayList<>();
+				ResultSet resultSet = statement.executeQuery("select * from order_items");) {
+			ArrayList<OrderItem> orderItems = new ArrayList<>();
 			while (resultSet.next()) {
-				items.add(itemFromResultSet(resultSet));
+				orderItems.add(orderItemFromResultSet(resultSet));
 			}
-			return items;
+			return orderItems;
 		} catch (SQLException e) {
 			LOGGER.debug(e.getStackTrace());
 			LOGGER.error(e.getMessage());
 		}
 		return new ArrayList<>();
 	}
+	
 
 }

@@ -6,6 +6,12 @@ public class OrderItem {
 	private Long customerId;
 	private int quantity;
 	
+	public OrderItem(Long id, Long itemId, Long customerId, int quantity) {
+		this.setId(id);
+		this.setItemId(itemId);
+		this.setCustomerId(customerId);
+		this.setQuantity(quantity);
+	}
 	public Long getId() {
 		return id;
 	}
