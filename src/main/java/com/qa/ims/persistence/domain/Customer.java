@@ -7,14 +7,14 @@ public class Customer {
 	private String surname;
 
 	public Customer(String firstName, String surname) {
-		this.firstName = firstName;
-		this.surname = surname;
+		this.setFirstName(firstName);
+		this.setSurname(surname);
 	}
 
 	public Customer(Long id, String firstName, String surname) {
-		this.id = id;
-		this.firstName = firstName;
-		this.surname = surname;
+		this.setId(id);
+		this.setFirstName(firstName);
+		this.setSurname(surname);
 	}
 
 	public Long getId() {
