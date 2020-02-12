@@ -6,8 +6,12 @@ public class Order {
 	private double cost;
 	
 	public Order(Long id, Long customerId, Double cost) {
-		this.customerId = id;
+		this.id = id;
 		this.customerId = customerId;
+		this.cost = cost;
+	}
+	public Order(Long customerId, Double cost) {
+		this.customerId = id;
 		this.cost = cost;
 	}
 	public Long getId() {
