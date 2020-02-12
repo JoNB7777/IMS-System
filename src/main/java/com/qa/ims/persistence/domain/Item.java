@@ -10,6 +10,10 @@ public class Item {
 		this.setItemName(itemName);
 		this.setItemValue(value);
 	}
+	public Item(String itemName, Double value) {
+		this.setItemName(itemName);
+		this.setItemValue(value);
+	}
 	public Long getId() {
 		return id;
 	}
