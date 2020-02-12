@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import com.qa.ims.persistence.domain.Customer;
 import com.qa.ims.persistence.domain.OrderItem;
 import com.qa.ims.services.CrudServices;
 import com.qa.ims.utils.Utils;
