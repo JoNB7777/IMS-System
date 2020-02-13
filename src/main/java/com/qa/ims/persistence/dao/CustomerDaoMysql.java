@@ -14,6 +14,11 @@ import com.qa.ims.persistence.domain.Customer;
 public class CustomerDaoMysql implements Dao<Customer> {
 
 	public static final Logger LOGGER = Logger.getLogger(CustomerDaoMysql.class);
+	
+	public void handleException(Exception e) {
+		LOGGER.debug(e.getStackTrace());
+		LOGGER.error(e.getMessage());
+	}
 
 	private String jdbcConnectionUrl;
 	private String username;
@@ -46,8 +51,7 @@ public class CustomerDaoMysql implements Dao<Customer> {
 			resultSet.next();
 			return customerFromResultSet(resultSet);
 		} catch (Exception e) {
-			LOGGER.debug(e.getStackTrace());
-			LOGGER.error(e.getMessage());
+			handleException(e);
 		}
 		return null;
 	}
@@ -65,8 +69,7 @@ public class CustomerDaoMysql implements Dao<Customer> {
 					+ "','" + customer.getSurname() + "')");
 			return readLatest();
 		} catch (Exception e) {
-			LOGGER.debug(e.getStackTrace());
-			LOGGER.error(e.getMessage());
+			handleException(e);
 		}
 		return null;
 	}
@@ -78,8 +81,7 @@ public class CustomerDaoMysql implements Dao<Customer> {
 			resultSet.next();
 			return customerFromResultSet(resultSet);
 		} catch (Exception e) {
-			LOGGER.debug(e.getStackTrace());
-			LOGGER.error(e.getMessage());
+			handleException(e);
 		}
 		return null;
 	}
@@ -99,8 +101,7 @@ public class CustomerDaoMysql implements Dao<Customer> {
 					+ customer.getSurname() + "' where id =" + customer.getId());
 			return readCustomer(customer.getId());
 		} catch (Exception e) {
-			LOGGER.debug(e.getStackTrace());
-			LOGGER.error(e.getMessage());
+			handleException(e);
 		}
 		return null;
 	}
@@ -116,8 +117,7 @@ public class CustomerDaoMysql implements Dao<Customer> {
 				Statement statement = connection.createStatement();) {
 			statement.executeUpdate("delete from customers where id = " + id);
 		} catch (Exception e) {
-			LOGGER.debug(e.getStackTrace());
-			LOGGER.error(e.getMessage());
+			handleException(e);
 		}
 	}
 
@@ -133,8 +133,7 @@ public class CustomerDaoMysql implements Dao<Customer> {
 			}
 			return customers;
 		} catch (SQLException e) {
-			LOGGER.debug(e.getStackTrace());
-			LOGGER.error(e.getMessage());
+			handleException(e);
 		}
 		return new ArrayList<>();
 	}
