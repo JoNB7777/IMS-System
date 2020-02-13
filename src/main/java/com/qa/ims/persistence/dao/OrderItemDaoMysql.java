@@ -14,6 +14,11 @@ import com.qa.ims.persistence.domain.OrderItem;
 public class OrderItemDaoMysql implements Dao<OrderItem> {
 	
 	public static final Logger LOGGER = Logger.getLogger(CustomerDaoMysql.class);
+	
+	public void handleException(Exception e) {
+		LOGGER.debug(e.getStackTrace());
+		LOGGER.error(e.getMessage());
+	}
 
 	private String jdbcConnectionUrl;
 	private String username;
@@ -56,8 +61,7 @@ public class OrderItemDaoMysql implements Dao<OrderItem> {
 			resultSet.next();
 			return orderItemFromResultSet(resultSet);
 		} catch (Exception e) {
-			LOGGER.debug(e.getStackTrace());
-			LOGGER.error(e.getMessage());
+			handleException(e);
 		}
 		return null;
 	}
@@ -75,8 +79,7 @@ public class OrderItemDaoMysql implements Dao<OrderItem> {
 					+ "','" + orderItem.getOrderId() + "', ' " + orderItem.getQuantity() + " ')");
 			return readLatest();
 		} catch (Exception e) {
-			LOGGER.debug(e.getStackTrace());
-			LOGGER.error(e.getMessage());
+			handleException(e);
 		}
 		return null;
 	}
@@ -93,8 +96,7 @@ public class OrderItemDaoMysql implements Dao<OrderItem> {
 			resultSet.next();
 			return orderItemFromResultSet(resultSet);
 		} catch (Exception e) {
-			LOGGER.debug(e.getStackTrace());
-			LOGGER.error(e.getMessage());
+			handleException(e);
 		}
 		return null;
 	}
@@ -111,8 +113,7 @@ public class OrderItemDaoMysql implements Dao<OrderItem> {
 			statement.executeUpdate("update order_items set quantity ='" + orderItem.getQuantity() +  "' where id =" + orderItem.getId());
 			return readOrderItem(orderItem.getId());
 		} catch (Exception e) {
-			LOGGER.debug(e.getStackTrace());
-			LOGGER.error(e.getMessage());
+			handleException(e);
 		}
 		return null;
 	}
@@ -128,8 +129,7 @@ public class OrderItemDaoMysql implements Dao<OrderItem> {
 				Statement statement = connection.createStatement();) {
 			statement.executeUpdate("delete from order_items where id = " + id);
 		} catch (Exception e) {
-			LOGGER.debug(e.getStackTrace());
-			LOGGER.error(e.getMessage());
+			handleException(e);
 		}
 		
 	}
