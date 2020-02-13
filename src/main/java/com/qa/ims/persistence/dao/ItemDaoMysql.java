@@ -32,6 +32,12 @@ public class ItemDaoMysql implements Dao<Item>{
 		this.password = password;
 	}
 
+	/**
+	 * Turns data about an item from the database into an item object with these as its attributes
+	 * @param resultSet
+	 * @return item object
+	 * @throws SQLException
+	 */
 	Item itemFromResultSet(ResultSet resultSet) throws SQLException {
 		Long id = resultSet.getLong("id");
 		String itemName = resultSet.getString("item_name");
@@ -39,6 +45,10 @@ public class ItemDaoMysql implements Dao<Item>{
 		return new Item(id, itemName, value);
 	}
 	
+	/**
+	 * Reads the item that has been added to the database last (as ids are auto-incrementing)
+	 * @return
+	 */
 	public Item readLatest() {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
 				Statement statement = connection.createStatement();
@@ -71,6 +81,11 @@ public class ItemDaoMysql implements Dao<Item>{
 		return null;
 	}
 	
+	/**
+	 * Reads out all the available data about an item from the item table
+	 * @param id - the id of the item
+	 * @return
+	 */
 	public Item readItem(Long id) {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
 				Statement statement = connection.createStatement();
@@ -120,6 +135,9 @@ public class ItemDaoMysql implements Dao<Item>{
 		
 	}
 	
+	/**
+	 * reads all info about all items from the items table
+	 */
 	@Override
 	public ArrayList<Item> readAll() {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);

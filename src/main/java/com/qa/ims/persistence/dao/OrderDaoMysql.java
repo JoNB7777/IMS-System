@@ -31,6 +31,11 @@ public class OrderDaoMysql implements Dao<Order>{
 		this.password = password;
 	}
 
+	/**
+	 * creates an order in the database
+	 * 
+	 * @param order - an order object
+	 */
 	@Override
 	public Order create(Order order) {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
@@ -45,6 +50,10 @@ public class OrderDaoMysql implements Dao<Order>{
 		return null;
 	}
 
+	/**
+	 * reads out the order that has been added to the orders table last (as ids are auto-incrementing)
+	 * @return
+	 */
 	private Order readLatest() {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
 				Statement statement = connection.createStatement();
@@ -58,6 +67,12 @@ public class OrderDaoMysql implements Dao<Order>{
 		return null;
 	}
 
+	/**
+	 * Turns info about an order into an order object with that info as its attributes
+	 * @param resultSet
+	 * @return
+	 * @throws SQLException
+	 */
 	private Order orderFromResultSet(ResultSet resultSet) throws SQLException {
 		Long id = resultSet.getLong("id");
 		Long customerId = resultSet.getLong("customer_id");
@@ -65,6 +80,9 @@ public class OrderDaoMysql implements Dao<Order>{
 		return new Order(id, customerId, cost);
 	}
 
+	/**
+	 * Reads all data about all orders from the database
+	 */
 	@Override
 	public ArrayList<Order> readAll() {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
@@ -82,6 +100,11 @@ public class OrderDaoMysql implements Dao<Order>{
 		return new ArrayList<>();
 	}
 
+	/**
+	 * Updates an order in the database
+	 * 
+	 * @param order - an order object
+	 */
 	@Override
 	public Order update(Order order) {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
@@ -95,6 +118,11 @@ public class OrderDaoMysql implements Dao<Order>{
 		return null;
 	}
 
+	/**
+	 * reads data about an order from the database by its id
+	 * @param id - the id of the order
+	 * @return
+	 */
 	private Order readOrder(Long id) {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
 				Statement statement = connection.createStatement();
@@ -108,6 +136,11 @@ public class OrderDaoMysql implements Dao<Order>{
 		return null;
 	}
 
+	/**
+	 * deletes an order from the system by its id
+	 * 
+	 * param id - the id of the order
+	 */
 	@Override
 	public void delete(long id) {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
