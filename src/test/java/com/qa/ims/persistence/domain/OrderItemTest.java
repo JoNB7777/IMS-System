@@ -125,10 +125,7 @@ public class OrderItemTest {
 		assertTrue(orderItem.equals(other));
 	}
 	
-<<<<<<< HEAD
-=======
-	
->>>>>>> bug/ignore-one-broken-test
+
 	@Ignore
 	@Test
 	public void otherQuantityDifferent() {
@@ -150,10 +147,7 @@ public class OrderItemTest {
 	public void hashCodeTest() {
 		assertEquals(orderItem.hashCode(), other.hashCode());
 	}
-<<<<<<< HEAD
-=======
-	
->>>>>>> bug/ignore-one-broken-test
+
 	@Ignore
 	@Test
 	public void hashCodeTestWithNull() {
