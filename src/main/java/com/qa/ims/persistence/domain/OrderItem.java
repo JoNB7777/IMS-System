@@ -43,19 +43,20 @@ public class OrderItem {
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
-	
+
+	@Override
 	public String toString() {
-		return "id:" + id + " order id:" + orderId + " item id:" + itemId + "quantity:" + quantity;
+		return "OrderItem [id=" + id + ", orderId=" + orderId + ", itemId=" + itemId + ", quantity=" + quantity + "]";
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((orderId == null) ? 0 : orderId.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((itemId == null) ? 0 : itemId.hashCode());
-		result = prime * result + ((quantity == (Integer) null) ? 0 : ((Integer) quantity).hashCode());
+		result = prime * result + ((orderId == null) ? 0 : orderId.hashCode());
+		result = prime * result + quantity;
 		return result;
 	}
 
@@ -68,11 +69,6 @@ public class OrderItem {
 		if (getClass() != obj.getClass())
 			return false;
 		OrderItem other = (OrderItem) obj;
-		if (orderId == null) {
-			if (other.orderId != null)
-				return false;
-		} else if (!orderId.equals(other.orderId))
-			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -83,12 +79,13 @@ public class OrderItem {
 				return false;
 		} else if (!itemId.equals(other.itemId))
 			return false;
-		if (quantity == (Integer) null) {
-			if (other.quantity != (Integer) null)
+		if (orderId == null) {
+			if (other.orderId != null)
 				return false;
-		} else if (quantity != other.quantity){
+		} else if (!orderId.equals(other.orderId))
 			return false;
-		}
+		if (quantity != other.quantity)
+			return false;
 		return true;
 	}
 
