@@ -7,16 +7,17 @@ import java.util.List;
 
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.Spy;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import com.qa.ims.persistence.domain.OrderItem;
 import com.qa.ims.services.OrderItemServices;
 
-
-@Ignore
+@RunWith(MockitoJUnitRunner.class)
 public class OrderItemControllerTest {
 	
 	@Mock
@@ -26,7 +27,6 @@ public class OrderItemControllerTest {
 	@InjectMocks
 	private OrderItemController orderItemController;
 	
-	@Ignore
 	@Test
 	public void readAllTest() {
 		OrderItemController orderItemController = new OrderItemController(orderItemServices);
@@ -39,7 +39,6 @@ public class OrderItemControllerTest {
 	}
 
 	
-	@Ignore
 	@Test
 	public void createTest() {
 		Long orderId = 1L;
@@ -53,9 +52,6 @@ public class OrderItemControllerTest {
 		assertEquals(savedOrderItem, orderItemController.create());
 	}
 
-	/**
-	 * 
-	 */
 	@Ignore
 	@Test
 	public void updateTest() {
@@ -63,7 +59,6 @@ public class OrderItemControllerTest {
 		Long orderId = 1L;
 		Long itemId = 1L;
 		int quantity = 5;
-		Mockito.doReturn(id, orderId, itemId, quantity).when(orderItemController).getLongInput();
 		Mockito.doReturn(id, orderId, itemId).when(orderItemController).getLongInput();
 		Mockito.doReturn(quantity).when(orderItemController).getIntInput();
 		OrderItem orderItem = new OrderItem(1L, orderId, itemId, quantity);
@@ -75,7 +70,6 @@ public class OrderItemControllerTest {
 	/**
 	 * Delete doesn't return anything, so we can just verify that it calls the delete method
 	 */
-	@Ignore
 	@Test
 	public void deleteTest() {
 		Long id = 1L;
