@@ -21,25 +21,6 @@ public class OrderItemTest {
 		other = new OrderItem(1L, 1L, 1L, 5);
 	}
 	
-	@Ignore
-	@Test
-	public void settersTest() {
-		assertNotNull(orderItem.getId());
-		assertNotNull(orderItem.getOrderId());
-		assertNotNull(orderItem.getItemId());
-		assertNotNull(orderItem.getQuantity());
-		
-		orderItem.setId(null);
-		assertNull(orderItem.getId());
-		orderItem.setOrderId(null);
-		assertNull(orderItem.getOrderId());
-		orderItem.setItemId(null);
-		assertNull(orderItem.getItemId());
-		orderItem.setQuantity((Integer) null);
-		assertNull(orderItem.getQuantity());
-		
-	}
-	
 	@Test
 	public void equalsWithNull() {
 		assertFalse(orderItem.equals(null));
@@ -105,22 +86,6 @@ public class OrderItemTest {
 		other.setId(2L);
 		assertFalse(orderItem.equals(other));
 	}
-	
-	@Ignore
-	@Test
-	public void nullQuantity() {
-		orderItem.setQuantity((Integer) null);
-		assertFalse(orderItem.equals(other));
-	}
-	
-	@Ignore
-	@Test
-	public void nullQuantityOnBoth() {
-		orderItem.setQuantity((Integer) null);
-		other.setQuantity((Integer) null);
-		assertTrue(orderItem.equals(other));
-	}
-	
 
 	@Test
 	public void otherQuantityDifferent() {
@@ -142,14 +107,6 @@ public class OrderItemTest {
 		assertEquals(orderItem.hashCode(), other.hashCode());
 	}
 
-	@Ignore
-	@Test
-	public void hashCodeTestWithNull() {
-		OrderItem orderItem = new OrderItem(null, null, (Integer) null);
-		OrderItem other = new OrderItem(null, null, (Integer) null);
-		assertEquals(orderItem.hashCode(), other.hashCode());
-	}
-	
 	@Test
 	public void toStringTest() {
 		String toString = "OrderItem [id:1, order id:1, item id:1, quantity:5]";
