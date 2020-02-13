@@ -66,27 +66,10 @@ public class OrderTest {
 		assertTrue(order.equals(other));
 	}
 	
-
-	@Ignore
-	@Test
-	public void orderCustomerIdNullButOtherCustomerIdNotNull() {
-		order.setCost((Double) null);;
-		assertFalse(order.equals(other));
-	}
-	
 	@Test
 	public void customerIdsNotEqual() {
 		other.setCustomerId(2L);;
 		assertFalse(order.equals(other));
-	}
-	
-
-	@Ignore
-	@Test
-	public void checkEqualityBetweenDifferentObjectsNullCustomerIds() {
-		order.setCost((Double) null);;
-		other.setCost((Double) null);;
-		assertTrue(order.equals(other));
 	}
 	
 	@Test
@@ -106,22 +89,6 @@ public class OrderTest {
 	public void otherIdDifferent() {
 		other.setId(2L);
 		assertFalse(order.equals(other));
-	}
-	
-	@Ignore
-	@Test
-	public void nullCost() {
-		order.setCost((Double) null);
-		assertFalse(order.equals(other));
-	}
-	
-
-	@Ignore
-	@Test
-	public void nullCostOnBoth() {
-		order.setCost((Double) null);
-		other.setCost((Double) null);
-		assertTrue(order.equals(other));
 	}
 	
 	@Test
@@ -144,13 +111,6 @@ public class OrderTest {
 		assertEquals(order.hashCode(), other.hashCode());
 	}
 	
-	@Ignore
-	@Test
-	public void hashCodeTestWithNull() {
-		Order order = new Order(null, null);
-		Order other = new Order(null, null);
-		assertEquals(order.hashCode(), other.hashCode());
-	}
 	
 	@Test
 	public void toStringTest() {
