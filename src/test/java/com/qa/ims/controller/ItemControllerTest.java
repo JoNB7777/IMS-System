@@ -41,7 +41,8 @@ public class ItemControllerTest {
 	public void createTest() {
 		String itemName = "Strawberries";
 		Double price = 3.99;
-		Mockito.doReturn(itemName, price).when(itemController).getInput();
+		Mockito.doReturn(itemName).when(itemController).getInput();
+		Mockito.doReturn(price).when(itemController).getDoubleInput();
 		Item item = new Item(itemName, price);
 		Item savedItem = new Item(1L, "Strawberries", 3.99);
 		Mockito.when(itemServices.create(item)).thenReturn(savedItem);
@@ -53,10 +54,12 @@ public class ItemControllerTest {
 	 */
 	@Test
 	public void updateTest() {
-		String id = "1";
+		Long id = 1L;
 		String itemName = "Strawberries";
 		Double price = 3.29;
-		Mockito.doReturn(id, itemName, price).when(itemController).getInput();
+		Mockito.doReturn(id).when(itemController).getLongInput();
+		Mockito.doReturn(itemName).when(itemController).getInput();
+		Mockito.doReturn(price).when(itemController).getDoubleInput();
 		Item item = new Item(1L, itemName, price);
 		Mockito.when(itemServices.update(item)).thenReturn(item);
 		assertEquals(item, itemController.update());
@@ -68,8 +71,8 @@ public class ItemControllerTest {
 	 */
 	@Test
 	public void deleteTest() {
-		String id = "1";
-		Mockito.doReturn(id).when(itemController).getInput();
+		Long id = 1L;
+		Mockito.doReturn(id).when(itemController).getLongInput();
 		itemController.delete();
 		Mockito.verify(itemServices, Mockito.times(1)).delete(1L);
 	}
