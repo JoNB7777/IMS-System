@@ -69,7 +69,7 @@ public class ItemDaoMysql implements Dao<Item>{
 	/**
 	 * Creates an item in the database
 	 * 
-	 * @param - takes in an item object - id will be ignored
+	 * @param - takes in an item object. id will be ignored
 	 */
 	@Override
 	public Item create(Item item) {
