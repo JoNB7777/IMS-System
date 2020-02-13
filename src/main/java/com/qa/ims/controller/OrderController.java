@@ -27,6 +27,10 @@ public class OrderController implements CrudController<Order> {
 		return Utils.getLongInput();
 	}
 	
+	Double getDoubleInput() {
+		return Utils.getDoubleInput();
+	}
+	
 	@Override
 	public List<Order> readAll() {
 		List<Order> orders = orderService.readAll();
