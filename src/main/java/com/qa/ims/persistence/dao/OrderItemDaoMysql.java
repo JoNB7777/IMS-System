@@ -31,6 +31,12 @@ public class OrderItemDaoMysql implements Dao<OrderItem> {
 		this.password = password;
 	}
 	
+	/**
+	 * turns all the data about an OrderItem into an OrderItem object
+	 * @param resultSet
+	 * @return
+	 * @throws SQLException
+	 */
 	OrderItem orderItemFromResultSet(ResultSet resultSet) throws SQLException {
 		Long id = resultSet.getLong("id");
 		Long orderId = resultSet.getLong("order_id");
@@ -39,6 +45,10 @@ public class OrderItemDaoMysql implements Dao<OrderItem> {
 		return new OrderItem(id, orderId, itemId, quantity);
 	}
 	
+	/**
+	 * Reads all data about the OrderItem that has been added to the database last (as ids are auto-incrementing)
+	 * @return
+	 */
 	public OrderItem readLatest() {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
 				Statement statement = connection.createStatement();
@@ -71,6 +81,11 @@ public class OrderItemDaoMysql implements Dao<OrderItem> {
 		return null;
 	}
 	
+	/**
+	 * Reads data about an OrderItem from the database
+	 * @param id - the id of the OrderItem
+	 * @return
+	 */
 	public OrderItem readOrderItem(Long id) {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
 				Statement statement = connection.createStatement();
@@ -119,6 +134,9 @@ public class OrderItemDaoMysql implements Dao<OrderItem> {
 		
 	}
 	
+	/**
+	 * reads all data about all OrderItems from the database
+	 */
 	@Override
 	public ArrayList<OrderItem> readAll() {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);

@@ -31,6 +31,12 @@ public class CustomerDaoMysql implements Dao<Customer> {
 		this.password = password;
 	}
 
+	/**
+	 * Uses the individual databse entries about a given customer to build a customer object from them with these as his attributes
+	 * @param resultSet
+	 * @return the customer object
+	 * @throws SQLException
+	 */
 	Customer customerFromResultSet(ResultSet resultSet) throws SQLException {
 		Long id = resultSet.getLong("id");
 		String firstName = resultSet.getString("first_name");
@@ -39,6 +45,10 @@ public class CustomerDaoMysql implements Dao<Customer> {
 	}
 
 
+	/**
+	 * Reads the customer that has been last added to the database (as ids are auto-incrementing)
+	 * @return
+	 */
 	public Customer readLatest() {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
 				Statement statement = connection.createStatement();
@@ -71,6 +81,11 @@ public class CustomerDaoMysql implements Dao<Customer> {
 		return null;
 	}
 
+	/**
+	 * Reads data about a customer from the database
+	 * 
+	 * @param id - the customer's id
+	 */
 	public Customer readCustomer(Long id) {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
 				Statement statement = connection.createStatement();
