@@ -7,6 +7,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class ItemTest {
@@ -87,6 +88,7 @@ public class ItemTest {
 		assertFalse(item.equals(other));
 	}
 	
+	@Ignore
 	@Test
 	public void nullIdOnBoth() {
 		item.setId(null);
