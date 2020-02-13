@@ -16,6 +16,11 @@ public class ItemDaoMysql implements Dao<Item>{
 	
 	public static final Logger LOGGER = Logger.getLogger(CustomerDaoMysql.class);
 	
+	public void handleException(Exception e) {
+		LOGGER.debug(e.getStackTrace());
+		LOGGER.error(e.getMessage());
+	}
+	
 	private String jdbcConnectionUrl;
 	private String username;
 	private String password;
@@ -56,8 +61,7 @@ public class ItemDaoMysql implements Dao<Item>{
 			resultSet.next();
 			return itemFromResultSet(resultSet);
 		} catch (Exception e) {
-			LOGGER.debug(e.getStackTrace());
-			LOGGER.error(e.getMessage());
+			handleException(e);
 		}
 		return null;
 	}
@@ -75,8 +79,7 @@ public class ItemDaoMysql implements Dao<Item>{
 					+ "','" + item.getItemValue() + "')");
 			return readLatest();
 		} catch (Exception e) {
-			LOGGER.debug(e.getStackTrace());
-			LOGGER.error(e.getMessage());
+			handleException(e);
 		}
 		return null;
 	}
@@ -93,8 +96,7 @@ public class ItemDaoMysql implements Dao<Item>{
 			resultSet.next();
 			return itemFromResultSet(resultSet);
 		} catch (Exception e) {
-			LOGGER.debug(e.getStackTrace());
-			LOGGER.error(e.getMessage());
+			handleException(e);
 		}
 		return null;
 	}
@@ -112,8 +114,7 @@ public class ItemDaoMysql implements Dao<Item>{
 					+ item.getItemValue() + "' where id =" + item.getId());
 			return readItem(item.getId());
 		} catch (Exception e) {
-			LOGGER.debug(e.getStackTrace());
-			LOGGER.error(e.getMessage());
+			handleException(e);
 		}
 		return null;
 	}
@@ -129,8 +130,7 @@ public class ItemDaoMysql implements Dao<Item>{
 				Statement statement = connection.createStatement();) {
 			statement.executeUpdate("delete from items where id = " + id);
 		} catch (Exception e) {
-			LOGGER.debug(e.getStackTrace());
-			LOGGER.error(e.getMessage());
+			handleException(e);
 		}
 		
 	}
@@ -149,8 +149,7 @@ public class ItemDaoMysql implements Dao<Item>{
 			}
 			return items;
 		} catch (SQLException e) {
-			LOGGER.debug(e.getStackTrace());
-			LOGGER.error(e.getMessage());
+			handleException(e);
 		}
 		return new ArrayList<>();
 	}

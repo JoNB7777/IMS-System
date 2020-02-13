@@ -15,6 +15,11 @@ public class OrderDaoMysql implements Dao<Order>{
 	
 	public static final Logger LOGGER = Logger.getLogger(OrderDaoMysql.class);
 	
+	public void handleException(Exception e) {
+		LOGGER.debug(e.getStackTrace());
+		LOGGER.error(e.getMessage());
+	}
+	
 	private String jdbcConnectionUrl;
 	private String username;
 	private String password;
@@ -44,8 +49,7 @@ public class OrderDaoMysql implements Dao<Order>{
 					+ "','" + order.getCost() + "')");
 			return readLatest();
 		} catch (Exception e) {
-			LOGGER.debug(e.getStackTrace());
-			LOGGER.error(e.getMessage());
+			handleException(e);
 		}
 		return null;
 	}
@@ -61,8 +65,7 @@ public class OrderDaoMysql implements Dao<Order>{
 			resultSet.next();
 			return orderFromResultSet(resultSet);
 		} catch (Exception e) {
-			LOGGER.debug(e.getStackTrace());
-			LOGGER.error(e.getMessage());
+			handleException(e);
 		}
 		return null;
 	}
@@ -94,8 +97,7 @@ public class OrderDaoMysql implements Dao<Order>{
 			}
 			return orders;
 		} catch (SQLException e) {
-			LOGGER.debug(e.getStackTrace());
-			LOGGER.error(e.getMessage());
+			handleException(e);
 		}
 		return new ArrayList<>();
 	}
@@ -112,8 +114,7 @@ public class OrderDaoMysql implements Dao<Order>{
 			statement.executeUpdate("update orders set cost ='" + order.getCost() + "' where id =" + order.getId());
 			return readOrder(order.getId());
 		} catch (Exception e) {
-			LOGGER.debug(e.getStackTrace());
-			LOGGER.error(e.getMessage());
+			handleException(e);
 		}
 		return null;
 	}
@@ -130,8 +131,7 @@ public class OrderDaoMysql implements Dao<Order>{
 			resultSet.next();
 			return orderFromResultSet(resultSet);
 		} catch (Exception e) {
-			LOGGER.debug(e.getStackTrace());
-			LOGGER.error(e.getMessage());
+			handleException(e);
 		}
 		return null;
 	}
@@ -147,8 +147,7 @@ public class OrderDaoMysql implements Dao<Order>{
 				Statement statement = connection.createStatement();) {
 			statement.executeUpdate("delete from orders where id = " + id);
 		} catch (Exception e) {
-			LOGGER.debug(e.getStackTrace());
-			LOGGER.error(e.getMessage());
+			handleException(e);
 		}
 		
 	}

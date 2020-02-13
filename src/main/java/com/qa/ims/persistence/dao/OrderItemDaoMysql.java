@@ -148,8 +148,7 @@ public class OrderItemDaoMysql implements Dao<OrderItem> {
 			}
 			return orderItems;
 		} catch (SQLException e) {
-			LOGGER.debug(e.getStackTrace());
-			LOGGER.error(e.getMessage());
+			handleException(e);
 		}
 		return new ArrayList<>();
 	}
