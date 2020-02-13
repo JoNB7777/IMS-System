@@ -52,6 +52,11 @@ public class ItemDaoMysql implements Dao<Item>{
 		return null;
 	}
 	
+	/**
+	 * Creates an item in the database
+	 * 
+	 * @param - takes in an item object - id will be ignored
+	 */
 	@Override
 	public Item create(Item item) {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
@@ -79,6 +84,11 @@ public class ItemDaoMysql implements Dao<Item>{
 		return null;
 	}
 	
+	/**
+	 * Updates an item in the database
+	 * 
+	 * @param item - takes in an item object, the id field will be used to update that item in the database
+	 */
 	@Override
 	public Item update(Item item) {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
@@ -93,6 +103,11 @@ public class ItemDaoMysql implements Dao<Item>{
 		return null;
 	}
 	
+	/**
+	 * Deletes an item in the database
+	 * 
+	 * @param id - id of the item
+	 */
 	@Override
 	public void delete(long id) {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);

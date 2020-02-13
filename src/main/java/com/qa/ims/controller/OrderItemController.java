@@ -8,6 +8,11 @@ import com.qa.ims.persistence.domain.OrderItem;
 import com.qa.ims.services.CrudServices;
 import com.qa.ims.utils.Utils;
 
+/**
+ * Takes in order items for the CRUD functionality
+ * @author Admin
+ *
+ */
 public class OrderItemController implements CrudController<OrderItem> {
 	
 public static final Logger LOGGER = Logger.getLogger(CustomerController.class);
@@ -35,6 +40,9 @@ public static final Logger LOGGER = Logger.getLogger(CustomerController.class);
 		return Utils.getIntInput();
 	}
 
+	/**
+	 * Reads all OrderItems to the logger
+	 */
 	@Override
 	public List<OrderItem> readAll() {
 		List<OrderItem> orderItems = orderItemService.readAll();
@@ -44,6 +52,9 @@ public static final Logger LOGGER = Logger.getLogger(CustomerController.class);
 		return orderItems;
 	}
 
+	/**
+	 * Creates an OrderItem by taking in user input
+	 */
 	@Override
 	public OrderItem create() {
 		LOGGER.info("Please enter an order id");
@@ -57,6 +68,9 @@ public static final Logger LOGGER = Logger.getLogger(CustomerController.class);
 		return orderItem;
 	}
 
+	/**
+	 * Updates an existing OrderItem by taking in user input
+	 */
 	@Override
 	public OrderItem update() {
 		LOGGER.info("Please enter the order id of the order-item you would like to update");
@@ -70,6 +84,9 @@ public static final Logger LOGGER = Logger.getLogger(CustomerController.class);
 		return orderItem;
 	}
 
+	/**
+	 * Deletes an existing OrderItem by its id
+	 */
 	@Override
 	public void delete() {
 		LOGGER.info("Please enter the id of the order-item you would like to delete");

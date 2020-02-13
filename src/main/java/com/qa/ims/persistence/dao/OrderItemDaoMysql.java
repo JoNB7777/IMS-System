@@ -52,6 +52,11 @@ public class OrderItemDaoMysql implements Dao<OrderItem> {
 		return null;
 	}
 
+	/**
+	 * Creates an order item in the database
+	 * 
+	 * @param orderItem - takes in an OrderItem object. id will be ignored
+	 */
 	@Override
 	public OrderItem create(OrderItem orderItem) {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
@@ -79,6 +84,11 @@ public class OrderItemDaoMysql implements Dao<OrderItem> {
 		return null;
 	}
 
+	/**
+	 * Updates an OrderItem in the database
+	 * 
+	 * @param orderItem - takes in an OrderItem object. The id field will be used to update that OrderItem in the database
+	 */
 	@Override
 	public OrderItem update(OrderItem orderItem) {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
@@ -92,6 +102,11 @@ public class OrderItemDaoMysql implements Dao<OrderItem> {
 		return null;
 	}
 
+	/**
+	 * Deletes an OrderItem in the database
+	 * 
+	 * @param id - id of that OrderItem
+	 */
 	@Override
 	public void delete(long id) {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);

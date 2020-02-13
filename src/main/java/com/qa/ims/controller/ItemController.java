@@ -8,6 +8,11 @@ import com.qa.ims.persistence.domain.Item;
 import com.qa.ims.services.CrudServices;
 import com.qa.ims.utils.Utils;
 
+/**
+ * Takes in item details for CRUD functionality
+ * @author Admin
+ *
+ */
 public class ItemController implements CrudController<Item> {
 	
 public static final Logger LOGGER = Logger.getLogger(CustomerController.class);
@@ -31,6 +36,9 @@ public static final Logger LOGGER = Logger.getLogger(CustomerController.class);
 		return Utils.getLongInput();
 	}
 
+	/**
+	 * Reads all items to the logger
+	 */
 	@Override
 	public List<Item> readAll() {
 		List<Item> items = itemService.readAll();
@@ -40,6 +48,9 @@ public static final Logger LOGGER = Logger.getLogger(CustomerController.class);
 		return items;
 	}
 
+	/**
+	 * Creates an item by taking in user input
+	 */
 	@Override
 	public Item create() {
 		LOGGER.info("Please enter a name for the item");
@@ -51,6 +62,9 @@ public static final Logger LOGGER = Logger.getLogger(CustomerController.class);
 		return item;
 	}
 
+	/**
+	 * Updates an existing item by taking in user input
+	 */
 	@Override
 	public Item update() {
 		LOGGER.info("Please enter the id of the item you would like to update");
@@ -64,6 +78,9 @@ public static final Logger LOGGER = Logger.getLogger(CustomerController.class);
 		return item;
 	}
 
+	/**
+	 * Deletes an existing item by the item id
+	 */
 	@Override
 	public void delete() {
 		LOGGER.info("Please enter the id of the item you would like to delete");
