@@ -88,7 +88,6 @@ public class ItemTest {
 		assertFalse(item.equals(other));
 	}
 	
-	@Ignore
 	@Test
 	public void nullIdOnBoth() {
 		item.setId(null);

@@ -148,14 +148,13 @@ public class OrderTest {
 	@Test
 	public void hashCodeTestWithNull() {
 		Order order = new Order(null, null);
-		Customer other = new Customer(null, null);
+		Order other = new Order(null, null);
 		assertEquals(order.hashCode(), other.hashCode());
 	}
 	
-	@Ignore
 	@Test
 	public void toStringTest() {
-		String toString = "id:1 customer id:1 cost:59.99";
+		String toString = "Order [id:1, customer id:1, cost:59.99]";
 		assertEquals(toString, other.toString());
 	}
 
