@@ -43,6 +43,7 @@ public class Order {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -68,7 +69,7 @@ public class Order {
 	}
 	@Override
 	public String toString() {
-		return "Order [id=" + id + ", customerId=" + customerId + ", cost=" + cost + "]";
+		return "Order [id:" + id + ", customer id:" + customerId + ", cost:" + cost + "]";
 	}
 
 }

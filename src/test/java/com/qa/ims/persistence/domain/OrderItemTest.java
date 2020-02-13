@@ -63,7 +63,6 @@ public class OrderItemTest {
 		assertTrue(orderItem.equals(orderItem));
 	}
 	
-	@Ignore
 	@Test
 	public void checkEqualityBetweenDifferentObjects() {
 		assertTrue(orderItem.equals(other));
@@ -81,7 +80,6 @@ public class OrderItemTest {
 		assertFalse(orderItem.equals(other));
 	}
 	
-	@Ignore
 	@Test
 	public void checkEqualityBetweenDifferentObjectsNullOrderId() {
 		orderItem.setOrderId(null);;
@@ -95,7 +93,6 @@ public class OrderItemTest {
 		assertFalse(orderItem.equals(other));
 	}
 	
-	@Ignore
 	@Test
 	public void nullIdOnBoth() {
 		orderItem.setId(null);
@@ -103,7 +100,6 @@ public class OrderItemTest {
 		assertTrue(orderItem.equals(other));
 	}
 	
-	@Ignore
 	@Test
 	public void otherIdDifferent() {
 		other.setId(2L);
@@ -126,7 +122,6 @@ public class OrderItemTest {
 	}
 	
 
-	@Ignore
 	@Test
 	public void otherQuantityDifferent() {
 		other.setQuantity(7);
@@ -142,7 +137,6 @@ public class OrderItemTest {
 		assertNotNull(orderItem.getQuantity());
 	}
 	
-	@Ignore
 	@Test
 	public void hashCodeTest() {
 		assertEquals(orderItem.hashCode(), other.hashCode());
@@ -156,10 +150,9 @@ public class OrderItemTest {
 		assertEquals(orderItem.hashCode(), other.hashCode());
 	}
 	
-	@Ignore
 	@Test
 	public void toStringTest() {
-		String toString = "id:1 order id:1 item id:1 quantity:5";
+		String toString = "OrderItem [id:1, order id:1, item id:1, quantity:5]";
 		assertEquals(toString, orderItem.toString());
 	}
 
