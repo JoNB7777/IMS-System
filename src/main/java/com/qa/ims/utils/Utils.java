@@ -2,6 +2,8 @@ package com.qa.ims.utils;
 
 import java.util.Scanner;
 
+import org.apache.log4j.Logger;
+
 public class Utils {
 	
 	private Utils () {
@@ -30,6 +32,11 @@ public class Utils {
 		@SuppressWarnings("resource")
 		Scanner scanner = new Scanner(System.in);
 		return Integer.valueOf(scanner.nextLine());
+	}
+	
+	public void handleException(Exception e, Logger LOGGER) {
+		LOGGER.debug(e.getStackTrace());
+		LOGGER.error(e.getMessage());
 	}
 
 }
