@@ -16,7 +16,7 @@ import com.qa.ims.persistence.domain.OrderItem;
 import com.qa.ims.services.OrderItemServices;
 
 
-@Ignore
+
 public class OrderItemControllerTest {
 	
 	@Mock
@@ -26,6 +26,7 @@ public class OrderItemControllerTest {
 	@InjectMocks
 	private OrderItemController orderItemController;
 	
+	@Ignore
 	@Test
 	public void readAllTest() {
 		OrderItemController orderItemController = new OrderItemController(orderItemServices);
@@ -37,12 +38,15 @@ public class OrderItemControllerTest {
 		assertEquals(orderItems, orderItemController.readAll());
 	}
 
+	
+	@Ignore
 	@Test
 	public void createTest() {
 		Long orderId = 1L;
 		Long itemId = 1L;
 		int quantity = 5;
-		Mockito.doReturn(orderId, itemId, quantity).when(orderItemController).getInput();
+		Mockito.doReturn(orderId, itemId).when(orderItemController).getLongInput();
+		Mockito.doReturn(quantity).when(orderItemController).getIntInput();
 		OrderItem orderItem = new OrderItem(orderId, itemId, quantity);
 		OrderItem savedOrderItem = new OrderItem(1L, 1L, 1L, 5);
 		Mockito.when(orderItemServices.create(orderItem)).thenReturn(savedOrderItem);
@@ -52,13 +56,15 @@ public class OrderItemControllerTest {
 	/**
 	 * 
 	 */
+	@Ignore
 	@Test
 	public void updateTest() {
-		String id = "1";
+		Long id = 1L;
 		Long orderId = 1L;
 		Long itemId = 1L;
 		int quantity = 5;
-		Mockito.doReturn(id, orderId, itemId, quantity).when(orderItemController).getInput();
+		Mockito.doReturn(id, orderId, itemId, quantity).when(orderItemController).getLongInput();
+		Mockito.doReturn(quantity).when(orderItemController).getIntInput();
 		OrderItem orderItem = new OrderItem(1L, orderId, itemId, quantity);
 		Mockito.when(orderItemServices.update(orderItem)).thenReturn(orderItem);
 		assertEquals(orderItem, orderItemController.update());
@@ -68,10 +74,11 @@ public class OrderItemControllerTest {
 	/**
 	 * Delete doesn't return anything, so we can just verify that it calls the delete method
 	 */
+	@Ignore
 	@Test
 	public void deleteTest() {
-		String id = "1";
-		Mockito.doReturn(id).when(orderItemController).getInput();
+		Long id = 1L;
+		Mockito.doReturn(id).when(orderItemController).getLongInput();
 		orderItemController.delete();
 		Mockito.verify(orderItemServices, Mockito.times(1)).delete(1L);
 	}

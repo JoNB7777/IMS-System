@@ -87,11 +87,11 @@ public class ItemTest {
 		item.setId(null);
 		assertFalse(item.equals(other));
 	}
-	@Ignore
+	
 	@Test
 	public void nullIdOnBoth() {
 		item.setId(null);
-		item.setId(null);
+		other.setId(null);
 		assertTrue(item.equals(other));
 	}
 	
