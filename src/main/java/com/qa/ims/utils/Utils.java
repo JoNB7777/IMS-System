@@ -34,7 +34,7 @@ public class Utils {
 		return Integer.valueOf(scanner.nextLine());
 	}
 	
-	public void handleException(Exception e, Logger LOGGER) {
+	public static void handleException(Exception e, Logger LOGGER) {
 		LOGGER.debug(e.getStackTrace());
 		LOGGER.error(e.getMessage());
 	}

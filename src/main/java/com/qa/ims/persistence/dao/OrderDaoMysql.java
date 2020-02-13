@@ -10,14 +10,14 @@ import java.util.ArrayList;
 import org.apache.log4j.Logger;
 
 import com.qa.ims.persistence.domain.Order;
+import com.qa.ims.utils.Utils;
 
 public class OrderDaoMysql implements Dao<Order>{
 	
 	public static final Logger LOGGER = Logger.getLogger(OrderDaoMysql.class);
 	
 	public void handleException(Exception e) {
-		LOGGER.debug(e.getStackTrace());
-		LOGGER.error(e.getMessage());
+		Utils.handleException(e, LOGGER);
 	}
 	
 	private String jdbcConnectionUrl;
