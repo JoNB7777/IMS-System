@@ -45,7 +45,7 @@ public class OrderItem {
 	}
 	
 	public String toString() {
-		return "id:" + id + " order id:" + orderId + " itemId:" + itemId + "quantity:" + quantity;
+		return "id:" + id + " order id:" + orderId + " item id:" + itemId + "quantity:" + quantity;
 	}
 
 	@Override
