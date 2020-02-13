@@ -33,10 +33,10 @@ public class OrderItemDaoMysql implements Dao<OrderItem> {
 	
 	OrderItem orderItemFromResultSet(ResultSet resultSet) throws SQLException {
 		Long id = resultSet.getLong("id");
-		Long itemId = resultSet.getLong("item_id");
 		Long orderId = resultSet.getLong("order_id");
+		Long itemId = resultSet.getLong("item_id");
 		int quantity = resultSet.getInt("quantity");
-		return new OrderItem(id, itemId, orderId, quantity);
+		return new OrderItem(id, orderId, itemId, quantity);
 	}
 	
 	public OrderItem readLatest() {
@@ -56,7 +56,7 @@ public class OrderItemDaoMysql implements Dao<OrderItem> {
 	public OrderItem create(OrderItem orderItem) {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
 				Statement statement = connection.createStatement();) {
-			statement.executeUpdate("insert into order_items(item_id, order_id, quantity) values('" + orderItem.getItemId()
+			statement.executeUpdate("insert into order_items(order_id, item_id, quantity) values('" + orderItem.getItemId()
 					+ "','" + orderItem.getOrderId() + "', ' " + orderItem.getQuantity() + " ')");
 			return readLatest();
 		} catch (Exception e) {

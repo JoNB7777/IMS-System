@@ -35,7 +35,7 @@ public class OrderDaoMysql implements Dao<Order>{
 	public Order create(Order order) {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
 				Statement statement = connection.createStatement();) {
-			statement.executeUpdate("insert into customers(customer_id, cost) values('" + order.getCustomerId()
+			statement.executeUpdate("insert into orders(customer_id, cost) values('" + order.getCustomerId()
 					+ "','" + order.getCost() + "')");
 			return readLatest();
 		} catch (Exception e) {

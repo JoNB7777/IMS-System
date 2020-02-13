@@ -59,13 +59,13 @@ public static final Logger LOGGER = Logger.getLogger(CustomerController.class);
 
 	@Override
 	public OrderItem update() {
-		LOGGER.info("Please enter the id of the order-item you would like to update");
-		Long id = getLongInput();
+		LOGGER.info("Please enter the order id of the order-item you would like to update");
+		Long orderId = getLongInput();
 		LOGGER.info("Please enter an item id");
 		Long itemId = getLongInput();
 		LOGGER.info("Please enter a quantity");
 		int quantity = getIntInput();
-		OrderItem orderItem = orderItemService.update(new OrderItem(id, itemId, quantity));
+		OrderItem orderItem = orderItemService.update(new OrderItem(orderId, itemId, quantity));
 		LOGGER.info("Order Item Updated");
 		return orderItem;
 	}
