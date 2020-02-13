@@ -14,6 +14,9 @@ public class Order {
 		this.customerId = customerId;
 		this.cost = cost;
 	}
+	public Order(Long customerId) {
+		this.customerId = customerId;
+	}
 	public Long getId() {
 		return id;
 	}
