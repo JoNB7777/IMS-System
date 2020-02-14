@@ -22,7 +22,6 @@ public class OrderTest {
 		other = new Order(1L, 1L, 59.99);
 	}
 	
-
 	@Ignore
 	@Test
 	public void settersTest() {
@@ -34,7 +33,7 @@ public class OrderTest {
 		assertNull(order.getId());
 		order.setCustomerId(null);
 		assertNull(order.getCustomerId());
-		order.setCost((Double) null);;
+		order.setCost(null);;
 		assertNull(order.getCost());
 		
 	}

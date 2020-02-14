@@ -6,14 +6,14 @@ public class OrderItem {
 	private Long itemId;
 	private int quantity;
 	
-	public OrderItem(Long id, Long orderId, Long itemId, int quantity) {
+	public OrderItem(Long id, Long orderId, Long itemId, Integer quantity) {
 		this.setId(id);
 		this.setOrderId(orderId);
 		this.setItemId(itemId);
 		this.setQuantity(quantity);
 	}
 	
-	public OrderItem(Long orderId, Long itemId, int quantity) {
+	public OrderItem(Long orderId, Long itemId, Integer quantity) {
 		this.setOrderId(orderId);
 		this.setItemId(itemId);
 		this.setQuantity(quantity);
@@ -37,10 +37,10 @@ public class OrderItem {
 	public void setOrderId(Long orderId) {
 		this.orderId = orderId;
 	}
-	public int getQuantity() {
+	public Integer getQuantity() {
 		return quantity;
 	}
-	public void setQuantity(int quantity) {
+	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
 
