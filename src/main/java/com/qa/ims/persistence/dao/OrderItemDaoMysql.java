@@ -25,7 +25,7 @@ public class OrderItemDaoMysql implements Dao<OrderItem> {
 	private String password;
 
 	public OrderItemDaoMysql(String username, String password) {
-		this.jdbcConnectionUrl = "jdbc:mysql://localhost:3306/ims";
+		this.jdbcConnectionUrl = "jdbc:mysql://34.89.15.11:3306/ims";
 		this.username = username;
 		this.password = password;
 	}
@@ -57,7 +57,7 @@ public class OrderItemDaoMysql implements Dao<OrderItem> {
 	public OrderItem readLatest() {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
 				Statement statement = connection.createStatement();
-				ResultSet resultSet = statement.executeQuery("SELECT FROM order_items ORDER BY id DESC LIMIT 1");) {
+				ResultSet resultSet = statement.executeQuery("SELECT * FROM order_items ORDER BY id DESC LIMIT 1");) {
 			resultSet.next();
 			return orderItemFromResultSet(resultSet);
 		} catch (Exception e) {
@@ -92,7 +92,7 @@ public class OrderItemDaoMysql implements Dao<OrderItem> {
 	public OrderItem readOrderItem(Long id) {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
 				Statement statement = connection.createStatement();
-				ResultSet resultSet = statement.executeQuery("SELECT FROM order_items where id = " + id);) {
+				ResultSet resultSet = statement.executeQuery("SELECT * FROM order_items where id = " + id);) {
 			resultSet.next();
 			return orderItemFromResultSet(resultSet);
 		} catch (Exception e) {
@@ -127,7 +127,7 @@ public class OrderItemDaoMysql implements Dao<OrderItem> {
 	public void delete(long id) {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
 				Statement statement = connection.createStatement();) {
-			statement.executeUpdate("delete from order_items where id = " + id);
+			statement.executeUpdate("delete * from order_items where id = " + id);
 		} catch (Exception e) {
 			handleException(e);
 		}
