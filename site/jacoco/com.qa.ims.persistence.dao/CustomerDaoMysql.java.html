@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CustomerDaoMysql.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">johannes-ims</a> &gt; <a href="index.source.html" class="el_package">com.qa.ims.persistence.dao</a> &gt; <span class="el_source">CustomerDaoMysql.java</span></div><h1>CustomerDaoMysql.java</h1><pre class="source lang-java linenums">package com.qa.ims.persistence.dao;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+
+import org.apache.log4j.Logger;
+
+import com.qa.ims.persistence.domain.Customer;
+import com.qa.ims.utils.Utils;
+
+public class CustomerDaoMysql implements Dao&lt;Customer&gt; {
+
+<span class="nc" id="L17">	public static final Logger LOGGER = Logger.getLogger(CustomerDaoMysql.class);</span>
+	
+	public void handleException(Exception e) {
+<span class="nc" id="L20">		Utils.handleException(e, LOGGER);</span>
+<span class="nc" id="L21">	}</span>
+
+	private String jdbcConnectionUrl;
+	private String username;
+	private String password;
+
+<span class="nc" id="L27">	public CustomerDaoMysql(String username, String password) {</span>
+<span class="nc" id="L28">		this.jdbcConnectionUrl = &quot;jdbc:mysql://34.89.15.11:3306/imsdb&quot;;</span>
+<span class="nc" id="L29">		this.username = username;</span>
+<span class="nc" id="L30">		this.password = password;</span>
+<span class="nc" id="L31">	}</span>
+
+<span class="nc" id="L33">	public CustomerDaoMysql(String jdbcConnectionUrl, String username, String password) {</span>
+<span class="nc" id="L34">		this.jdbcConnectionUrl = jdbcConnectionUrl;</span>
+<span class="nc" id="L35">		this.username = username;</span>
+<span class="nc" id="L36">		this.password = password;</span>
+<span class="nc" id="L37">	}</span>
+
+	/**
+	 * Uses the individual databse entries about a given customer to build a customer object from them with these as his attributes
+	 * @param resultSet
+	 * @return the customer object
+	 * @throws SQLException
+	 */
+	Customer customerFromResultSet(ResultSet resultSet) throws SQLException {
+<span class="nc" id="L46">		Long id = resultSet.getLong(&quot;id&quot;);</span>
+<span class="nc" id="L47">		String firstName = resultSet.getString(&quot;first_name&quot;);</span>
+<span class="nc" id="L48">		String surname = resultSet.getString(&quot;surname&quot;);</span>
+<span class="nc" id="L49">		return new Customer(id, firstName, surname);</span>
+	}
+
+
+	/**
+	 * Reads the customer that has been last added to the database (as ids are auto-incrementing)
+	 * @return
+	 */
+	public Customer readLatest() {
+<span class="nc" id="L58">		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);</span>
+<span class="nc" id="L59">				Statement statement = connection.createStatement();</span>
+<span class="nc" id="L60">				ResultSet resultSet = statement.executeQuery(&quot;SELECT * FROM customers ORDER BY id DESC LIMIT 1&quot;);) {</span>
+<span class="nc" id="L61">			resultSet.next();</span>
+<span class="nc" id="L62">			return customerFromResultSet(resultSet);</span>
+<span class="nc" id="L63">		} catch (Exception e) {</span>
+<span class="nc" id="L64">			handleException(e);</span>
+		}
+<span class="nc" id="L66">		return null;</span>
+	}
+
+	/**
+	 * Creates a customer in the database
+	 * 
+	 * @param customer - takes in a customer object. id will be ignored
+	 */
+	@Override
+	public Customer create(Customer customer) {
+<span class="nc" id="L76">		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);</span>
+<span class="nc" id="L77">				Statement statement = connection.createStatement();) {</span>
+<span class="nc" id="L78">			statement.executeUpdate(&quot;insert into customers(first_name, surname) values('&quot; + customer.getFirstName()</span>
+<span class="nc" id="L79">					+ &quot;','&quot; + customer.getSurname() + &quot;')&quot;);</span>
+<span class="nc" id="L80">			return readLatest();</span>
+<span class="nc" id="L81">		} catch (Exception e) {</span>
+<span class="nc" id="L82">			handleException(e);</span>
+		}
+<span class="nc" id="L84">		return null;</span>
+	}
+
+	/**
+	 * Reads data about a customer from the database
+	 * 
+	 * @param id - the customer's id
+	 */
+	public Customer readCustomer(Long id) {
+<span class="nc" id="L93">		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);</span>
+<span class="nc" id="L94">				Statement statement = connection.createStatement();</span>
+<span class="nc" id="L95">				ResultSet resultSet = statement.executeQuery(&quot;SELECT * FROM customers where id = &quot; + id);) {</span>
+<span class="nc" id="L96">			resultSet.next();</span>
+<span class="nc" id="L97">			return customerFromResultSet(resultSet);</span>
+<span class="nc" id="L98">		} catch (Exception e) {</span>
+<span class="nc" id="L99">			handleException(e);</span>
+		}
+<span class="nc" id="L101">		return null;</span>
+	}
+
+	/**
+	 * Updates a customer in the database
+	 * 
+	 * @param customer - takes in a customer object, the id field will be used to
+	 *                 update that customer in the database
+	 * @return
+	 */
+	@Override
+	public Customer update(Customer customer) {
+<span class="nc" id="L113">		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);</span>
+<span class="nc" id="L114">				Statement statement = connection.createStatement();) {</span>
+<span class="nc" id="L115">			statement.executeUpdate(&quot;update customers set first_name ='&quot; + customer.getFirstName() + &quot;', surname ='&quot;</span>
+<span class="nc" id="L116">					+ customer.getSurname() + &quot;' where id =&quot; + customer.getId());</span>
+<span class="nc" id="L117">			return readCustomer(customer.getId());</span>
+<span class="nc" id="L118">		} catch (Exception e) {</span>
+<span class="nc" id="L119">			handleException(e);</span>
+		}
+<span class="nc" id="L121">		return null;</span>
+	}
+
+	/**
+	 * Deletes a customer in the database
+	 * 
+	 * @param id - id of the customer
+	 */
+	@Override
+	public void delete(long id) {
+<span class="nc" id="L131">		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);</span>
+<span class="nc" id="L132">				Statement statement = connection.createStatement();) {</span>
+<span class="nc" id="L133">			statement.executeUpdate(&quot;delete * from customers where id = &quot; + id);</span>
+<span class="nc" id="L134">		} catch (Exception e) {</span>
+<span class="nc" id="L135">			handleException(e);</span>
+<span class="nc" id="L136">		}</span>
+<span class="nc" id="L137">	}</span>
+
+
+	@Override
+	public ArrayList&lt;Customer&gt; readAll() {
+<span class="nc" id="L142">		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);</span>
+<span class="nc" id="L143">				Statement statement = connection.createStatement();</span>
+<span class="nc" id="L144">				ResultSet resultSet = statement.executeQuery(&quot;select * from customers&quot;);) {</span>
+<span class="nc" id="L145">			ArrayList&lt;Customer&gt; customers = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">			while (resultSet.next()) {</span>
+<span class="nc" id="L147">				customers.add(customerFromResultSet(resultSet));</span>
+			}
+<span class="nc" id="L149">			return customers;</span>
+<span class="nc" id="L150">		} catch (SQLException e) {</span>
+<span class="nc" id="L151">			handleException(e);</span>
+		}
+<span class="nc" id="L153">		return new ArrayList&lt;&gt;();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
