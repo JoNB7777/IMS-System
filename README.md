@@ -20,6 +20,9 @@
 ### Step 2: Set up Jenkins on a virtual machine and a Sonarqube server
 ### Step 3: Schedule a new build in Jenkins to get the code from the master branch of your GitHub account and deploy the project to Sonarqube
 
+## Coding Style Tests
+### Sonarqube helps to analyse the project and find bugs, as well as any poorly written code.
+### Sonarqube also helps to analtyse the Javadoc coverage and duplications
 
 ## Built with:
 ### Maven Dependency Management
