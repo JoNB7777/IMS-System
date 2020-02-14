@@ -15,7 +15,7 @@ import com.qa.ims.utils.Utils;
 
 public class ItemDaoMysql implements Dao<Item>{
 	
-	public static final Logger LOGGER = Logger.getLogger(CustomerDaoMysql.class);
+	public static final Logger LOGGER = Logger.getLogger(ItemDaoMysql.class);
 	
 	public void handleException(Exception e) {
 		Utils.handleException(e, LOGGER);
