@@ -15,7 +15,7 @@ import com.qa.ims.utils.Utils;
  */
 public class OrderItemController implements CrudController<OrderItem> {
 	
-public static final Logger LOGGER = Logger.getLogger(CustomerController.class);
+public static final Logger LOGGER = Logger.getLogger(OrderItemController.class);
 	
 	private CrudServices<OrderItem> orderItemService;
 	
