@@ -25,7 +25,7 @@ public class OrderDaoMysql implements Dao<Order>{
 	private String password;
 
 	public OrderDaoMysql(String username, String password) {
-		this.jdbcConnectionUrl = "jdbc:mysql://localhost:3306/ims";
+		this.jdbcConnectionUrl = "jdbc:mysql://34.89.15.11:3306/ims";
 		this.username = username;
 		this.password = password;
 	}
@@ -61,7 +61,7 @@ public class OrderDaoMysql implements Dao<Order>{
 	private Order readLatest() {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
 				Statement statement = connection.createStatement();
-				ResultSet resultSet = statement.executeQuery("SELECT FROM orders ORDER BY id DESC LIMIT 1");) {
+				ResultSet resultSet = statement.executeQuery("SELECT * FROM orders ORDER BY id DESC LIMIT 1");) {
 			resultSet.next();
 			return orderFromResultSet(resultSet);
 		} catch (Exception e) {
@@ -127,7 +127,7 @@ public class OrderDaoMysql implements Dao<Order>{
 	private Order readOrder(Long id) {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
 				Statement statement = connection.createStatement();
-				ResultSet resultSet = statement.executeQuery("SELECT FROM orders where id = " + id);) {
+				ResultSet resultSet = statement.executeQuery("SELECT * FROM orders where id = " + id);) {
 			resultSet.next();
 			return orderFromResultSet(resultSet);
 		} catch (Exception e) {
@@ -145,7 +145,7 @@ public class OrderDaoMysql implements Dao<Order>{
 	public void delete(long id) {
 		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);
 				Statement statement = connection.createStatement();) {
-			statement.executeUpdate("delete from orders where id = " + id);
+			statement.executeUpdate("delete * from orders where id = " + id);
 		} catch (Exception e) {
 			handleException(e);
 		}
