@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OrderItemController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">johannes-ims</a> &gt; <a href="index.source.html" class="el_package">com.qa.ims.controller</a> &gt; <span class="el_source">OrderItemController.java</span></div><h1>OrderItemController.java</h1><pre class="source lang-java linenums">package com.qa.ims.controller;
+
+import java.util.List;
+
+import org.apache.log4j.Logger;
+
+import com.qa.ims.persistence.domain.OrderItem;
+import com.qa.ims.services.CrudServices;
+import com.qa.ims.utils.Utils;
+
+/**
+ * Takes in order items for the CRUD functionality
+ * @author Admin
+ *
+ */
+public class OrderItemController implements CrudController&lt;OrderItem&gt; {
+	
+<span class="fc" id="L18">public static final Logger LOGGER = Logger.getLogger(OrderItemController.class);</span>
+	
+	private CrudServices&lt;OrderItem&gt; orderItemService;
+	
+<span class="fc" id="L22">	public OrderItemController(CrudServices&lt;OrderItem&gt; orderItemService) {</span>
+<span class="fc" id="L23">		this.orderItemService = orderItemService;</span>
+<span class="fc" id="L24">	}</span>
+	
+
+	String getInput() {
+<span class="nc" id="L28">		return Utils.getInput();</span>
+	}
+	
+	Double getDoubleInput() {
+<span class="nc" id="L32">		return Utils.getDoubleInput();</span>
+	}
+	
+	Long getLongInput() {
+<span class="nc" id="L36">		return Utils.getLongInput();</span>
+	}
+	
+	Integer getIntInput() {
+<span class="nc" id="L40">		return Utils.getIntInput();</span>
+	}
+
+	/**
+	 * Reads all OrderItems to the logger
+	 */
+	@Override
+	public List&lt;OrderItem&gt; readAll() {
+<span class="fc" id="L48">		List&lt;OrderItem&gt; orderItems = orderItemService.readAll();</span>
+<span class="fc bfc" id="L49" title="All 2 branches covered.">		for(OrderItem orderItem: orderItems) {</span>
+<span class="fc" id="L50">			LOGGER.info(orderItem.toString());</span>
+<span class="fc" id="L51">		}</span>
+<span class="fc" id="L52">		return orderItems;</span>
+	}
+
+	/**
+	 * Creates an OrderItem by taking in user input
+	 */
+	@Override
+	public OrderItem create() {
+<span class="fc" id="L60">		LOGGER.info(&quot;Please enter an order id&quot;);</span>
+<span class="fc" id="L61">		Long orderId = getLongInput();</span>
+<span class="fc" id="L62">		LOGGER.info(&quot;Please enter an item id&quot;);</span>
+<span class="fc" id="L63">		Long itemId = getLongInput();</span>
+<span class="fc" id="L64">		LOGGER.info(&quot;Please enter a quantity&quot;);</span>
+<span class="fc" id="L65">		int quantity = getIntInput();</span>
+<span class="fc" id="L66">		OrderItem orderItem = orderItemService.create(new OrderItem(orderId, itemId, quantity));</span>
+<span class="fc" id="L67">		LOGGER.info(&quot;orderItem created&quot;);</span>
+<span class="fc" id="L68">		return orderItem;</span>
+	}
+
+	/**
+	 * Updates an existing OrderItem by taking in user input
+	 */
+	@Override
+	public OrderItem update() {
+<span class="nc" id="L76">		LOGGER.info(&quot;Please enter the order id of the order-item you would like to update&quot;);</span>
+<span class="nc" id="L77">		Long orderId = getLongInput();</span>
+<span class="nc" id="L78">		LOGGER.info(&quot;Please enter an item id&quot;);</span>
+<span class="nc" id="L79">		Long itemId = getLongInput();</span>
+<span class="nc" id="L80">		LOGGER.info(&quot;Please enter a quantity&quot;);</span>
+<span class="nc" id="L81">		int quantity = getIntInput();</span>
+<span class="nc" id="L82">		OrderItem orderItem = orderItemService.update(new OrderItem(orderId, itemId, quantity));</span>
+<span class="nc" id="L83">		LOGGER.info(&quot;Order Item Updated&quot;);</span>
+<span class="nc" id="L84">		return orderItem;</span>
+	}
+
+	/**
+	 * Deletes an existing OrderItem by its id
+	 */
+	@Override
+	public void delete() {
+<span class="fc" id="L92">		LOGGER.info(&quot;Please enter the id of the order-item you would like to delete&quot;);</span>
+<span class="fc" id="L93">		Long id = getLongInput();</span>
+<span class="fc" id="L94">		orderItemService.delete(id);</span>
+<span class="fc" id="L95">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

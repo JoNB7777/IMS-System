@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ItemController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">johannes-ims</a> &gt; <a href="index.source.html" class="el_package">com.qa.ims.controller</a> &gt; <span class="el_source">ItemController.java</span></div><h1>ItemController.java</h1><pre class="source lang-java linenums">package com.qa.ims.controller;
+
+import java.util.List;
+
+import org.apache.log4j.Logger;
+
+import com.qa.ims.persistence.domain.Item;
+import com.qa.ims.services.CrudServices;
+import com.qa.ims.utils.Utils;
+
+/**
+ * Takes in item details for CRUD functionality
+ * @author Admin
+ *
+ */
+public class ItemController implements CrudController&lt;Item&gt; {
+	
+<span class="fc" id="L18">public static final Logger LOGGER = Logger.getLogger(ItemController.class);</span>
+	
+	private CrudServices&lt;Item&gt; itemService;
+	
+<span class="fc" id="L22">	public ItemController(CrudServices&lt;Item&gt; itemService) {</span>
+<span class="fc" id="L23">		this.itemService = itemService;</span>
+<span class="fc" id="L24">	}</span>
+	
+
+	String getInput() {
+<span class="nc" id="L28">		return Utils.getInput();</span>
+	}
+	
+	Double getDoubleInput() {
+<span class="nc" id="L32">		return Utils.getDoubleInput();</span>
+	}
+	
+	Long getLongInput() {
+<span class="nc" id="L36">		return Utils.getLongInput();</span>
+	}
+
+	/**
+	 * Reads all items to the logger
+	 */
+	@Override
+	public List&lt;Item&gt; readAll() {
+<span class="fc" id="L44">		List&lt;Item&gt; items = itemService.readAll();</span>
+<span class="fc bfc" id="L45" title="All 2 branches covered.">		for(Item item: items) {</span>
+<span class="fc" id="L46">			LOGGER.info(item.toString());</span>
+<span class="fc" id="L47">		}</span>
+<span class="fc" id="L48">		return items;</span>
+	}
+
+	/**
+	 * Creates an item by taking in user input
+	 */
+	@Override
+	public Item create() {
+<span class="fc" id="L56">		LOGGER.info(&quot;Please enter a name for the item&quot;);</span>
+<span class="fc" id="L57">		String itemName = getInput();</span>
+<span class="fc" id="L58">		LOGGER.info(&quot;Please enter a price for the item&quot;);</span>
+<span class="fc" id="L59">		Double itemPrice = getDoubleInput();</span>
+<span class="fc" id="L60">		Item item = itemService.create(new Item(itemName, itemPrice));</span>
+<span class="fc" id="L61">		LOGGER.info(&quot;Item created&quot;);</span>
+<span class="fc" id="L62">		return item;</span>
+	}
+
+	/**
+	 * Updates an existing item by taking in user input
+	 */
+	@Override
+	public Item update() {
+<span class="fc" id="L70">		LOGGER.info(&quot;Please enter the id of the item you would like to update&quot;);</span>
+<span class="fc" id="L71">		Long id = getLongInput();</span>
+<span class="fc" id="L72">		LOGGER.info(&quot;Please enter an item name&quot;);</span>
+<span class="fc" id="L73">		String itemName = getInput();</span>
+<span class="fc" id="L74">		LOGGER.info(&quot;Please enter a price&quot;);</span>
+<span class="fc" id="L75">		Double itemPrice = getDoubleInput();</span>
+<span class="fc" id="L76">		Item item = itemService.update(new Item(id, itemName, itemPrice));</span>
+<span class="fc" id="L77">		LOGGER.info(&quot;Item Updated&quot;);</span>
+<span class="fc" id="L78">		return item;</span>
+	}
+
+	/**
+	 * Deletes an existing item by the item id
+	 */
+	@Override
+	public void delete() {
+<span class="fc" id="L86">		LOGGER.info(&quot;Please enter the id of the item you would like to delete&quot;);</span>
+<span class="fc" id="L87">		Long id = getLongInput();</span>
+<span class="fc" id="L88">		itemService.delete(id);</span>
+		
+<span class="fc" id="L90">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

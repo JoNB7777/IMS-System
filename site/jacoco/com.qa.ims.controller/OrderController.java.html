@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OrderController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">johannes-ims</a> &gt; <a href="index.source.html" class="el_package">com.qa.ims.controller</a> &gt; <span class="el_source">OrderController.java</span></div><h1>OrderController.java</h1><pre class="source lang-java linenums">package com.qa.ims.controller;
+
+import java.util.List;
+
+import org.apache.log4j.Logger;
+
+import com.qa.ims.persistence.domain.Order;
+import com.qa.ims.services.CrudServices;
+import com.qa.ims.utils.Utils;
+
+public class OrderController implements CrudController&lt;Order&gt; {
+
+<span class="fc" id="L13">	public static final Logger LOGGER = Logger.getLogger(OrderController.class);</span>
+	
+	private CrudServices&lt;Order&gt; orderService;
+	
+<span class="fc" id="L17">	public OrderController(CrudServices&lt;Order&gt; orderService) {</span>
+<span class="fc" id="L18">		this.orderService = orderService;</span>
+<span class="fc" id="L19">	}</span>
+
+	String getInput() {
+<span class="nc" id="L22">		return Utils.getInput();</span>
+	}
+	
+	Long getLongInput() {
+<span class="nc" id="L26">		return Utils.getLongInput();</span>
+	}
+	
+	Double getDoubleInput() {
+<span class="nc" id="L30">		return Utils.getDoubleInput();</span>
+	}
+	
+	@Override
+	public List&lt;Order&gt; readAll() {
+<span class="fc" id="L35">		List&lt;Order&gt; orders = orderService.readAll();</span>
+<span class="fc bfc" id="L36" title="All 2 branches covered.">		for(Order order: orders) {</span>
+<span class="fc" id="L37">			LOGGER.info(order.toString());</span>
+<span class="fc" id="L38">		}</span>
+<span class="fc" id="L39">		return orders;</span>
+	}
+
+	@Override
+	public Order create() {
+<span class="fc" id="L44">		LOGGER.info(&quot;Please enter a customer id&quot;);</span>
+<span class="fc" id="L45">		Long customerId = getLongInput();</span>
+<span class="fc" id="L46">		Order order = orderService.create(new Order(customerId));</span>
+<span class="fc" id="L47">		LOGGER.info(&quot;Order created&quot;);</span>
+<span class="fc" id="L48">		return order;</span>
+	}
+
+	@Override
+	public Order update() {
+<span class="fc" id="L53">		return null;</span>
+	}
+
+	@Override
+	public void delete() {
+<span class="fc" id="L58">		LOGGER.info(&quot;Please enter the id of the order you would like to delete&quot;);</span>
+<span class="fc" id="L59">		Long id = getLongInput();</span>
+<span class="fc" id="L60">		orderService.delete(id);</span>
+		
+<span class="fc" id="L62">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

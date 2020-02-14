@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ItemDaoMysql.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">johannes-ims</a> &gt; <a href="index.source.html" class="el_package">com.qa.ims.persistence.dao</a> &gt; <span class="el_source">ItemDaoMysql.java</span></div><h1>ItemDaoMysql.java</h1><pre class="source lang-java linenums">package com.qa.ims.persistence.dao;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+
+import org.apache.log4j.Logger;
+
+import com.qa.ims.persistence.domain.Item;
+import com.qa.ims.utils.Utils;
+
+
+public class ItemDaoMysql implements Dao&lt;Item&gt;{
+	
+<span class="nc" id="L18">	public static final Logger LOGGER = Logger.getLogger(ItemDaoMysql.class);</span>
+	
+	public void handleException(Exception e) {
+<span class="nc" id="L21">		Utils.handleException(e, LOGGER);</span>
+<span class="nc" id="L22">	}</span>
+	
+	private String jdbcConnectionUrl;
+	private String username;
+	private String password;
+
+<span class="nc" id="L28">	public ItemDaoMysql(String username, String password) {</span>
+<span class="nc" id="L29">		this.jdbcConnectionUrl = &quot;jdbc:mysql://34.89.15.11:3306/imsdb&quot;;</span>
+<span class="nc" id="L30">		this.username = username;</span>
+<span class="nc" id="L31">		this.password = password;</span>
+<span class="nc" id="L32">	}</span>
+
+<span class="nc" id="L34">	public ItemDaoMysql(String jdbcConnectionUrl, String username, String password) {</span>
+<span class="nc" id="L35">		this.jdbcConnectionUrl = jdbcConnectionUrl;</span>
+<span class="nc" id="L36">		this.username = username;</span>
+<span class="nc" id="L37">		this.password = password;</span>
+<span class="nc" id="L38">	}</span>
+
+	/**
+	 * Turns data about an item from the database into an item object with these as its attributes
+	 * @param resultSet
+	 * @return item object
+	 * @throws SQLException
+	 */
+	Item itemFromResultSet(ResultSet resultSet) throws SQLException {
+<span class="nc" id="L47">		Long id = resultSet.getLong(&quot;id&quot;);</span>
+<span class="nc" id="L48">		String itemName = resultSet.getString(&quot;item_name&quot;);</span>
+<span class="nc" id="L49">		Double value = resultSet.getDouble(&quot;item_value&quot;);</span>
+<span class="nc" id="L50">		return new Item(id, itemName, value);</span>
+	}
+	
+	/**
+	 * Reads the item that has been added to the database last (as ids are auto-incrementing)
+	 * @return
+	 */
+	public Item readLatest() {
+<span class="nc" id="L58">		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);</span>
+<span class="nc" id="L59">				Statement statement = connection.createStatement();</span>
+<span class="nc" id="L60">				ResultSet resultSet = statement.executeQuery(&quot;SELECT * FROM items ORDER BY id DESC LIMIT 1&quot;);) {</span>
+<span class="nc" id="L61">			resultSet.next();</span>
+<span class="nc" id="L62">			return itemFromResultSet(resultSet);</span>
+<span class="nc" id="L63">		} catch (Exception e) {</span>
+<span class="nc" id="L64">			handleException(e);</span>
+		}
+<span class="nc" id="L66">		return null;</span>
+	}
+	
+	/**
+	 * Creates an item in the database
+	 * 
+	 * @param - takes in an item object. id will be ignored
+	 */
+	@Override
+	public Item create(Item item) {
+<span class="nc" id="L76">		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);</span>
+<span class="nc" id="L77">				Statement statement = connection.createStatement();) {</span>
+<span class="nc" id="L78">			statement.executeUpdate(&quot;insert into items(item_name, item_value) values('&quot; + item.getItemName()</span>
+<span class="nc" id="L79">					+ &quot;','&quot; + item.getItemValue() + &quot;')&quot;);</span>
+<span class="nc" id="L80">			return readLatest();</span>
+<span class="nc" id="L81">		} catch (Exception e) {</span>
+<span class="nc" id="L82">			handleException(e);</span>
+		}
+<span class="nc" id="L84">		return null;</span>
+	}
+	
+	/**
+	 * Reads out all the available data about an item from the item table
+	 * @param id - the id of the item
+	 * @return
+	 */
+	public Item readItem(Long id) {
+<span class="nc" id="L93">		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);</span>
+<span class="nc" id="L94">				Statement statement = connection.createStatement();</span>
+<span class="nc" id="L95">				ResultSet resultSet = statement.executeQuery(&quot;SELECT * FROM items where id = &quot; + id);) {</span>
+<span class="nc" id="L96">			resultSet.next();</span>
+<span class="nc" id="L97">			return itemFromResultSet(resultSet);</span>
+<span class="nc" id="L98">		} catch (Exception e) {</span>
+<span class="nc" id="L99">			handleException(e);</span>
+		}
+<span class="nc" id="L101">		return null;</span>
+	}
+	
+	/**
+	 * Updates an item in the database
+	 * 
+	 * @param item - takes in an item object, the id field will be used to update that item in the database
+	 */
+	@Override
+	public Item update(Item item) {
+<span class="nc" id="L111">		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);</span>
+<span class="nc" id="L112">				Statement statement = connection.createStatement();) {</span>
+<span class="nc" id="L113">			statement.executeUpdate(&quot;update items set item_name ='&quot; + item.getItemName() + &quot;', item_value ='&quot;</span>
+<span class="nc" id="L114">					+ item.getItemValue() + &quot;' where id =&quot; + item.getId());</span>
+<span class="nc" id="L115">			return readItem(item.getId());</span>
+<span class="nc" id="L116">		} catch (Exception e) {</span>
+<span class="nc" id="L117">			handleException(e);</span>
+		}
+<span class="nc" id="L119">		return null;</span>
+	}
+	
+	/**
+	 * Deletes an item in the database
+	 * 
+	 * @param id - id of the item
+	 */
+	@Override
+	public void delete(long id) {
+<span class="nc" id="L129">		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);</span>
+<span class="nc" id="L130">				Statement statement = connection.createStatement();) {</span>
+<span class="nc" id="L131">			statement.executeUpdate(&quot;delete * from items where id = &quot; + id);</span>
+<span class="nc" id="L132">		} catch (Exception e) {</span>
+<span class="nc" id="L133">			handleException(e);</span>
+<span class="nc" id="L134">		}</span>
+		
+<span class="nc" id="L136">	}</span>
+	
+	/**
+	 * reads all info about all items from the items table
+	 */
+	@Override
+	public ArrayList&lt;Item&gt; readAll() {
+<span class="nc" id="L143">		try (Connection connection = DriverManager.getConnection(jdbcConnectionUrl, username, password);</span>
+<span class="nc" id="L144">				Statement statement = connection.createStatement();</span>
+<span class="nc" id="L145">				ResultSet resultSet = statement.executeQuery(&quot;select * from items&quot;);) {</span>
+<span class="nc" id="L146">			ArrayList&lt;Item&gt; items = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L147" title="All 2 branches missed.">			while (resultSet.next()) {</span>
+<span class="nc" id="L148">				items.add(itemFromResultSet(resultSet));</span>
+			}
+<span class="nc" id="L150">			return items;</span>
+<span class="nc" id="L151">		} catch (SQLException e) {</span>
+<span class="nc" id="L152">			handleException(e);</span>
+		}
+<span class="nc" id="L154">		return new ArrayList&lt;&gt;();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
