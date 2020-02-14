@@ -22,6 +22,24 @@ public class OrderItemTest {
 	}
 	
 	@Test
+	public void settersTest() {
+		assertNotNull(orderItem.getId());
+		assertNotNull(orderItem.getOrderId());
+		assertNotNull(orderItem.getItemId());
+		assertNotNull(orderItem.getQuantity());
+		
+		orderItem.setId(null);
+		assertNull(orderItem.getId());
+		orderItem.setOrderId(null);
+		assertNull(orderItem.getOrderId());
+		orderItem.setItemId(null);
+		assertNull(orderItem.getItemId());
+//		orderItem.setQuantity(null);
+//		assertNull(orderItem.getQuantity());
+//		
+	}
+	
+	@Test
 	public void equalsWithNull() {
 		assertFalse(orderItem.equals(null));
 	}
@@ -36,7 +54,7 @@ public class OrderItemTest {
 		assertEquals(1L, orderItem.getId(), 0);
 		assertEquals(1L, orderItem.getOrderId(), 0);
 		assertEquals(1L, orderItem.getItemId(), 0);
-		assertEquals(5, orderItem.getQuantity());
+		assertEquals(5, orderItem.getQuantity(), 0);
 	}
 	
 	@Test
@@ -50,14 +68,14 @@ public class OrderItemTest {
 	}
 	
 	@Test
-	public void orderItemOrderIdNameNullButOtherOrderIdNotNull() {
+	public void orderItemOrderIdNullButOtherOrderIdNotNull() {
 		orderItem.setOrderId(null);
 		assertFalse(orderItem.equals(other));
 	}
 	
 	@Test
 	public void orderItemOrderIdNotEqual() {
-		other.setOrderId(null);;
+		other.setOrderId(2L);
 		assertFalse(orderItem.equals(other));
 	}
 	
@@ -84,6 +102,18 @@ public class OrderItemTest {
 	@Test
 	public void otherIdDifferent() {
 		other.setId(2L);
+		assertFalse(orderItem.equals(other));
+	}
+	
+	@Test
+	public void orderItemItemIdNullButOtherItemIdNotNull() {
+		orderItem.setItemId(null);
+		assertFalse(orderItem.equals(other));
+	}
+	
+	@Test
+	public void orderItemItemIdNotEqual() {
+		other.setItemId(2L);
 		assertFalse(orderItem.equals(other));
 	}
 
