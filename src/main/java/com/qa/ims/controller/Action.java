@@ -33,7 +33,7 @@ public enum Action {
 	}
 
 	/**
-	 * Prints out all posible actions
+	 * Prints out all possible actions
 	 */
 	public static void printActions() {
 		for (Action action : Action.values()) {
